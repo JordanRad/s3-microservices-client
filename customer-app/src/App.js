@@ -1,13 +1,76 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React , {useState} from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { Container } from "@material-ui/core";
+import { createMuiTheme, ThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
+import NavBar from './components/NavBar';
+import './index.css';
+import {cartFunctions as cf} from './helpers/cartFunctions';
+import ProductList from './components/ProductList';
+import Login from './components/Login';
+import Register from './components/Register';
+import Cart from './components/Cart';
+import Checkout from './components/Checkout';
+const App = () => {
+  let theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: "#C0D6DF",
+        light: "#DBE9EE",
+        dark: "#365866",
+        contrastText: "#00000"
+      },
+      secondary: {
+        main: "#FFBF00",
+        dark: "#9b7400",
+      },
+    },
+  });
+  theme = responsiveFontSizes(theme);
 
-function App() {
+  const [cart,setCart]  = useState(cf.getCart());
+
+    const refreshCartIconHandler = ()=>{
+        setCart(cf.getCart())
+    }
+  
+  let user= {name: "Jordan",lastName: "Radushev",address: {} }
+  localStorage.setItem("user",JSON.stringify(user));
+  localStorage.setItem("order",JSON.stringify([]));
   return (
-    <div className="App">
-      <input placeholder></input>
-    </div>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <Container className="app">
+          <Switch>
+            <Route exact strict path={"/"}>
+              <NavBar cart={cart}/>
+              <Container>
+                <ProductList refreshCart={refreshCartIconHandler}/>
+              </Container>
+            </Route>
+            <Route exact strict path={"/login"}>
+              <Login/>
+            </Route>
+            <Route exact strict path={"/register"}>
+              <Register/>
+            </Route>
+            <Route exact strict path={"/cart"}>
+            <NavBar cart={cart}/>
+              <Container>
+                <Cart refreshCart={refreshCartIconHandler} />
+              </Container>
+            </Route>
+            <Route exact strict path={"/checkout"}>
+              <Container>
+                <Checkout />
+              </Container>
+            </Route>
+            <Route path="*">
+              <Redirect to={'/'} />
+            </Route>
+          </Switch>
+        </Container>
+      </ThemeProvider>
+    </Router>
   );
 }
-
 export default App;

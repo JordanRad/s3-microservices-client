@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import AuthService from "../../services/AuthService";
+import AuthService from "../services/AuthService";
 const Login = (props) => {
 
     const [usernameInput, setUsernameInput] = useState("");
@@ -12,30 +12,31 @@ const Login = (props) => {
     const passwordInputHandler = (e) => setPasswordInput(e.target.value);
     const buttonClickHandler = (e) => {
         e.preventDefault();
-        AuthService.login(usernameInput, passwordInput).then(response => {
-            console.log(response.data)
-            if (response.data !== "Wrong credentials") {
-                let token = JSON.stringify(response.data);
-                localStorage.setItem("userToken", token)
-                console.log(JSON.parse(localStorage.getItem('userToken')))
-                props.history.push('/dashboard');
-            } else {
+        AuthService.login(usernameInput, passwordInput)
+            .then(response => {
+                console.log(response.data)
+                if (response.status === 200) {
+                    let token = JSON.stringify(response.data);
+                    localStorage.setItem("userToken", token)
+                    console.log(JSON.parse(localStorage.getItem('userToken')))
+                    props.history.push('/dashboard');
+                }
+            })
+            .catch(error => {
                 setErrorMessage("WRONG CREDENTIALS");
                 setButtonColor("danger");
-
                 setTimeout(() => {
                     setErrorMessage("");
                     setButtonColor("primary");
                 }, 2500);
-            }
-        })
+            })
 
     }
-    
+
     return (
         <div className="m-1 d-flex justify-content-center">
+            <Form className="col-lg-4 offset-lg-4 col-md-6 offset-md-3 text-center mt-5 mr-auto">
 
-            <Form className="text-center mt-5" style={{ width: "40%" }}>
                 <div className="text-center mb-2 dark-red i b">{errorMessage}</div>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>Username</Form.Label>
@@ -45,6 +46,7 @@ const Login = (props) => {
                         value={usernameInput}
                         onChange={usernameInputHandler} />
                 </Form.Group>
+
                 <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
                     <Form.Control

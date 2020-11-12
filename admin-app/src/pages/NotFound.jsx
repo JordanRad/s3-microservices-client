@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Button } from 'react-bootstrap';
 const NotFound = (props) => {
     const buttonClickHandler = (e) => props.history.push("/");
 
@@ -7,13 +6,7 @@ const NotFound = (props) => {
         <div className="m-1 d-flex justify-content-center">
             <div className="f3">You are not authoritized to access this page!</div>
             <div className="">
-                <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={buttonClickHandler}
-                >
-                    to Login
-            </Button>
+                <button onClick={buttonClickHandler} className="btn btn-primary btn-lg">To Login</button>
             </div>
         </div>
     );

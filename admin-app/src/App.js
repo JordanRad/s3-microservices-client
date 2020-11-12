@@ -12,11 +12,12 @@ import PrivateRoute from './components/PrivateRoute';
 import Dashboard from './components/pages/Dashboard';
 import NotFound from './components/pages/NotFound';
 import UserList from './components/UserList';
+import history from './services/history';
 function App() {
 
   return (
     <div className="h">
-      <Router>
+      <Router history={history}>
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/notfound" component={NotFound} />

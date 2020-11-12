@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import AuthService from "../services/AuthService";
+import history from './../services/history';
+
 const Navigation = (props) => {
     const buttonClickHandler = (e) => {
         e.preventDefault();
         AuthService.logout()
     };
-    // const usersLinkRedirect = (e) => props.history.push("/users");
+    const usersLinkRedirect = (e) => {
+        e.preventDefault();
+        props.history.push("/users");
+    }
     // const productsLinkRedirect = (e) => props.history.push("/products");
     // const ordersLinkRedirect = (e) => props.history.push("/orders");
     return (
@@ -18,7 +23,10 @@ const Navigation = (props) => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item ">
-                        <a className="light-blue nav-link" href="#">Users</a>
+                        <a
+                            className="light-blue nav-link"
+                            onClick={usersLinkRedirect}>
+                            Users</a>
                     </li>
                     <li className="nav-item">
                         <a className="light-blue nav-link" href="#">Orders</a>
