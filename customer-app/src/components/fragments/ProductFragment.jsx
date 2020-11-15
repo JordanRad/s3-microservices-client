@@ -11,7 +11,13 @@ const useStyles = makeStyles((theme) => ({
     fragment: {
         borderColor: theme.palette.primary.dark,
         backgroundColor: theme.palette.primary.light,
-        textAlign: "center"
+        textAlign: "center",
+        [theme.breakpoints.only('xs')]: {
+            height: "335px"
+        },
+        [theme.breakpoints.up('sm')]: {
+            height: "355px"
+        },
     },
     fragmentButton: {
         borderColor: theme.palette.primary.dark,
@@ -29,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
     },
     notAvailable: {
         color: "red",
-        fontWeight: 600
+        fontWeight: 400
     },
     image: {
         height: 0, paddingTop: '56%',
-        marginBottom:"10px"
+        marginBottom: "10px"
     }
 
 }));
@@ -64,7 +70,7 @@ const ProductFragment = (props) => {
                     {props.name.toUpperCase()}
                 </Typography>
                 <Typography variant="body2" color="textPrimary" gutterBottom>
-                    {props.description}
+                    {props.description !== "" ? props.description : "------"}
                 </Typography>
                 <CardMedia
                     className={classes.image}

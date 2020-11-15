@@ -60,7 +60,7 @@ const App = () => {
               </Container>
             </Route>
             <Route exact strict path={"/checkout"}>
-              <Container>
+              <Container style={{paddingLeft:0,paddingRight:0}}>
                 <Checkout />
               </Container>
             </Route>

@@ -1,68 +1,90 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 const useStyles = makeStyles((theme) => ({
-  inputFields:{
-    paddingTop:'22px'
+  inputFields: {
+    paddingTop: '22px'
   }
 }));
 
-const AddressFormFragment = () => {
+const AddressFormFragment = (props) => {
   const classes = useStyles();
-  
+  let emptyCounter = 4;
+  let fullAddress ={};
+
+  const validateInputs = (e) => {
+    let city = document.getElementById('city').value;
+    let address = document.getElementById('address').value;
+    let zip = document.getElementById('zip').value;
+    let country = document.getElementById('country').value;
+    emptyCounter = 4
+    if (city !== "") emptyCounter--;
+    if (address !== "") emptyCounter--;
+    if (zip !== "") emptyCounter--;
+    if (country !== "") emptyCounter--;
+
+    if (emptyCounter === 0) {
+      fullAddress = { city: city, country: country, zip: zip, address: address }
+      props.validationHandler(fullAddress)
+    }
+  }
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Shipping address
       </Typography>
+      <Typography variant="body2" gutterBottom>
+        *please fill every field of the address form to proceed
+      </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <TextField
-          className={classes.inputFields}
+            className={classes.inputFields}
             required
-            id="address1"
-            name="address1"
-            label="Address line 1"
+            id="address"
+            name="address"
+            label="Address line"
             fullWidth
             autoComplete="shipping address-line1"
+            onChange={validateInputs}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-           className={classes.inputFields}
+            className={classes.inputFields}
             required
             id="city"
             name="city"
             label="City"
             fullWidth
             autoComplete="shipping address-level2"
+            onChange={validateInputs}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField  className={classes.inputFields} id="state" name="state" label="State/Province/Region" fullWidth />
-        </Grid>
-        <Grid item xs={12} sm={6}>
           <TextField
-           className={classes.inputFields}
+            className={classes.inputFields}
             required
             id="zip"
             name="zip"
             label="Zip / Postal code"
             fullWidth
             autoComplete="shipping postal-code"
+            onChange={validateInputs}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-           className={classes.inputFields}
+            className={classes.inputFields}
             required
             id="country"
             name="country"
             label="Country"
             fullWidth
             autoComplete="shipping country"
+            onChange={validateInputs}
           />
         </Grid>
       </Grid>

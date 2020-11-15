@@ -16,7 +16,7 @@ import ReviewFragment from './fragments/ReviewFragment';
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: 'relative',
-    zIndex:-1
+    zIndex: -1
   },
   layout: {
     width: 'auto',
@@ -51,27 +51,48 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Shipping address', 'Payment details', 'Order review'];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressFormFragment />;
-    case 1:
-      return <PaymentFormFragment />;
-    case 2:
-      return <ReviewFragment />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
 
-const Checkout = ()=> {
+const Checkout = () => {
+
   const classes = useStyles();
+
   const [activeStep, setActiveStep] = useState(0);
-  const [address,setAddress] = useState([]);
+
+  const [addressValidation, setAddressValidation] = useState(false)
+
+  let user = JSON.parse(localStorage.getItem('user'))
+
+  const addressValidationHandler = (address) => {
+    setAddressValidation(true)
+
+    user.address = address
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+  const getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return <AddressFormFragment validationHandler={addressValidationHandler} />;
+      case 1:
+        return <PaymentFormFragment />;
+      case 2:
+        return <ReviewFragment />;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
+
   const handleNext = () => {
-    
+    if (activeStep === 1) {
+      let cardNumber = document.getElementById("cardNumber").value
+      let cardName = document.getElementById("cardName").value
+      let cvv = document.getElementById("cvv").value
+      let expDate = document.getElementById("expDate").value
+      let cardDetails = { cardNumber: cardNumber, cardName: cardName, cvv: cvv, expDate: expDate }
+      user.cardDetails = cardDetails
+      localStorage.setItem('user', JSON.stringify(user));
+    }
     setActiveStep(activeStep + 1);
   };
 
@@ -113,25 +134,26 @@ const Checkout = ()=> {
                 </Typography>
               </React.Fragment>
             ) : (
-              <React.Fragment>
-                {getStepContent(activeStep)}
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} className={classes.button}>
-                      Back
+                <React.Fragment>
+                  {getStepContent(activeStep)}
+                  <div className={classes.buttons}>
+                    {activeStep !== 0 && (
+                      <Button onClick={handleBack} className={classes.button}>
+                        Back
+                      </Button>
+                    )}
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                      disabled={!addressValidation}
+                    >
+                      {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
                     </Button>
-                  )}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                  </Button>
-                </div>
-              </React.Fragment>
-            )}
+                  </div>
+                </React.Fragment>
+              )}
           </React.Fragment>
         </Paper>
       </main>

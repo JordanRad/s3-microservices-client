@@ -32,10 +32,8 @@ const Cart = (props) => {
     //Set quantity to the ordered items
     let counter = 0;
     let order = cf.getCart()
-
         //Sort them by name
         .sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
-
         //Count items with similiar names
         .map((item, index, array) => {
             let itemWithQuantity = item;

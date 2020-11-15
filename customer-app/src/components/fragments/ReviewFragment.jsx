@@ -22,7 +22,10 @@ const useStyles = makeStyles((theme) => ({
 const ReviewFragment = () => {
     const classes = useStyles();
     const user = JSON.parse(localStorage.getItem("user"));
+    const address = user.address.country.toUpperCase()+ ": "+user.address.zip.toUpperCase()+"- "+user.address.address
     let cartItems =cf.itemQuantityCart()
+
+    console.log(user);
     return (
         <React.Fragment>
             <Typography variant="h6" gutterBottom>
@@ -46,8 +49,8 @@ const ReviewFragment = () => {
                     <Typography variant="h6" gutterBottom className={classes.title}>
                         Shipping
                     </Typography>
-                    <Typography gutterBottom>{user.name}</Typography>
-                    <Typography gutterBottom>SOFIA</Typography>
+                    <Typography variant="body2" gutterBottom>{address}</Typography>
+                    <Typography variant="body2" gutterBottom>{user.address.city.toUpperCase()}</Typography>
                 </Grid>
 
             </Grid>
