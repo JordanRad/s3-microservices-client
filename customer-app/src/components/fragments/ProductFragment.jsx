@@ -8,12 +8,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Divider } from '@material-ui/core';
 import { cartFunctions as cf } from '../../helpers/cartFunctions';
 const useStyles = makeStyles((theme) => ({
-    fragment: {
+    root: {
         borderColor: theme.palette.primary.dark,
         backgroundColor: theme.palette.primary.light,
         textAlign: "center",
         [theme.breakpoints.only('xs')]: {
-            height: "335px"
+            height: "345px"
         },
         [theme.breakpoints.up('sm')]: {
             height: "355px"
@@ -38,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 400
     },
     image: {
-        height: 0, paddingTop: '56%',
+        width:"99%",
+        paddingTop: '50%',
         marginBottom: "10px"
     }
 
@@ -64,9 +65,9 @@ const ProductFragment = (props) => {
         </Typography>);
 
     return (
-        <Card className={classes.fragment} variant="outlined">
+        <Card className={classes.root} variant="outlined">
             <CardContent>
-                <Typography variant="h6" color="textPrimary" gutterBottom>
+                <Typography variant="body1" color="textPrimary" gutterBottom>
                     {props.name.toUpperCase()}
                 </Typography>
                 <Typography variant="body2" color="textPrimary" gutterBottom>

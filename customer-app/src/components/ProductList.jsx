@@ -46,7 +46,7 @@ const ProductList = (props) => {
     .map(item => {
         return (
             <>
-                <Grid key={item.id+1000} item xs={6} sm={4} md={3}>
+                <Grid key={item.id+1000} item xs={12} sm={6} md={4}>
                     <ProductFragment
                         name={item.name}
                         price={item.price}
@@ -63,7 +63,7 @@ const ProductList = (props) => {
     if (products === []) {
         return (
             <div className={classes.root}>
-                <Grid container spacing={5}>
+                <Grid container  spacing={5}>
                     Loading....
                 </Grid>
             </div>
@@ -73,7 +73,7 @@ const ProductList = (props) => {
             <>
                 <div className={classes.root}>
                     <SearchBarFragment onSelect = {onSelectedOption} />
-                    <Grid container spacing={3}>
+                    <Grid container spacing={4}>
                         {itemsList}
                     </Grid>
                 </div>

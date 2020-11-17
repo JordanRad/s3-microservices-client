@@ -50,7 +50,7 @@ const CartIconFragment = (props) => {
         return (
             <div className={classes.buttons}>
                 <Link to={'./'} className={classes.backButton}>
-                    Back to products
+                    Back
                  </Link>
             </div>
         );

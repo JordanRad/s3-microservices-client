@@ -5,7 +5,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import OrderItemFragment from './fragments/OrderItemFragment';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core';
+import { Button, Grid, Typography } from '@material-ui/core';
 import {cartFunctions as cf} from '../helpers/cartFunctions';
 const useStyles = makeStyles((theme) => ({
     backButton: {
@@ -16,6 +16,11 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: theme.palette.primary.light,
             color:theme.palette.primary.dark,
         },
+    },
+    heading:{
+        color:theme.palette.primary.dark,
+        marginBottom:"22px",
+        marginTop:"102px"
     },
 }));
 
@@ -61,9 +66,10 @@ const Cart = (props) => {
 
     return (
         <>
-            <h1>Your Cart</h1>
-            <div>
-                <Button disabled={cart.length===0} variant="outlined" className={classes.backButton} href='./checkout'>Proceed to checkout</Button>
+            <Typography className={classes.heading} variant="h4">Your Cart</Typography>
+            <Button disabled={cart.length===0} variant="outlined" className={classes.backButton} href='./checkout'>Proceed to checkout</Button>
+            <Grid>
+                
                 <List component="nav">
                     {orderItemsList}
                 </List>
@@ -71,7 +77,7 @@ const Cart = (props) => {
                 <ListItem>
                     <ListItemText primary={"TOTAL: €" + orderTotalSum} />
                 </ListItem>
-            </div>
+            </Grid>
         </>
     )
 }

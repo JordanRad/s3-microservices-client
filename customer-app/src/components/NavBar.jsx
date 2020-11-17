@@ -44,7 +44,7 @@ const NavBar =(props)=> {
                     <IconButton onClick={toggleDrawer} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" className={classes.title}>
+                    <Typography variant="body1" className={classes.title}>
                        {content}
                     </Typography>
                     <CartIconFragment cart={props.cart}/>
