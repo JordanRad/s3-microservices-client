@@ -31,7 +31,6 @@ const OrderItem = (props) => {
     const classes = useStyles();
     const onClickHandler = (e) => {
         let deletedItemName = e.target.parentNode.getAttribute("item");
-        console.log(deletedItemName)
         cf.deleteFromCart(deletedItemName)
         props.refreshCart()
     }

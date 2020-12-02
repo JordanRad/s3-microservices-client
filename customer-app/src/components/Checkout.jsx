@@ -10,13 +10,24 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AddressFormFragment from './fragments/AddressFormFragment';
-import PaymentFormFragment from './fragments/PaymentFormFragment';
 import ReviewFragment from './fragments/ReviewFragment';
-
+import { Link } from 'react-router-dom';
+import BackspaceIcon from '@material-ui/icons/Backspace';
+import { cartFunctions as cf } from '../helpers/cartFunctions';
+import CommunicationService from '../services/CommunicationService';
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: 'relative',
-    zIndex: -1
+    zIndex: 0,
+    color: "white",
+    backgroundColor: theme.palette.primary.dark
+  },
+  link: {
+    marginLeft: "auto",
+    color: theme.palette.secondary.main,
+    "&:hover":{
+      color: theme.palette.primary.main,
+    }
   },
   layout: {
     width: 'auto',
@@ -37,6 +48,12 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(6),
       padding: theme.spacing(3),
     },
+    '& .MuiStepIcon-root.MuiStepIcon-active': {
+      color: theme.palette.primary.dark
+    },
+    '& .MuiStepIcon-root.MuiStepIcon-completed': {
+      color: theme.palette.primary.dark
+    },
   },
   stepper: {
     padding: theme.spacing(3, 0, 5),
@@ -51,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ['Shipping address', 'Payment details', 'Order review'];
+const steps = ['Shipping address', 'Order review'];
 
 
 const Checkout = () => {
@@ -62,21 +79,20 @@ const Checkout = () => {
 
   const [addressValidation, setAddressValidation] = useState(false)
 
-  let user = JSON.parse(localStorage.getItem('user'))
+  const [orderNumber, setOrderNumber] = useState("000000000")
+  let user = JSON.parse(sessionStorage.getItem('user'))
 
   const addressValidationHandler = (address) => {
     setAddressValidation(true)
 
     user.address = address
-    localStorage.setItem('user', JSON.stringify(user));
+    sessionStorage.setItem('user', JSON.stringify(user));
   }
   const getStepContent = (step) => {
     switch (step) {
       case 0:
-        return <AddressFormFragment validationHandler={addressValidationHandler} />;
+        return <AddressFormFragment user={user} validationHandler={addressValidationHandler} />;
       case 1:
-        return <PaymentFormFragment />;
-      case 2:
         return <ReviewFragment />;
       default:
         throw new Error('Unknown step');
@@ -84,22 +100,29 @@ const Checkout = () => {
   }
 
   const handleNext = () => {
-    if (activeStep === 1) {
-      let cardNumber = document.getElementById("cardNumber").value
-      let cardName = document.getElementById("cardName").value
-      let cvv = document.getElementById("cvv").value
-      let expDate = document.getElementById("expDate").value
-      let cardDetails = { cardNumber: cardNumber, cardName: cardName, cvv: cvv, expDate: expDate }
-      user.cardDetails = cardDetails
-      localStorage.setItem('user', JSON.stringify(user));
-    }
     setActiveStep(activeStep + 1);
+    if (activeStep === 1) {
+      let orderRequest = {
+        user: {
+          id: 1,
+          email: user.email,
+          address: user.address.country + ", " + user.address.city + " - " + user.address.address + ", " + user.address.zip
+        },
+        orderNumber: user.firstName.substring(0, 1).toUpperCase() + user.lastName.substring(0, 1).toUpperCase() + Date.now().toString() + "XTX" + user.address.zip.substring(0, 2),
+        products: cf.itemQuantityCart()
+      };
+
+      console.log(JSON.stringify(orderRequest))
+      CommunicationService.sendOrder(orderRequest).then(r => setOrderNumber(r))
+
+
+    }
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
+  //console.log(user)
   return (
     <React.Fragment>
       <CssBaseline />
@@ -108,6 +131,7 @@ const Checkout = () => {
           <Typography variant="h6" color="inherit" noWrap>
             Webshop LTD.
           </Typography>
+          <Link className={classes.link} to={'./'}><BackspaceIcon fontSize="large"/></Link>
         </Toolbar>
       </AppBar>
       <main className={classes.layout}>
@@ -129,8 +153,7 @@ const Checkout = () => {
                   Thank you for your order.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order has been succesfully sent. We have emailed your order confirmation, and will
-                  send you an update when your order has shipped.
+                  {`Your order has been succesfully sent.\nYour order number is:\n ${orderNumber}`}
                 </Typography>
               </React.Fragment>
             ) : (

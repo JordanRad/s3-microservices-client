@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted';
 import Badge from '@material-ui/core/Badge';
 import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
@@ -50,7 +51,7 @@ const CartIconFragment = (props) => {
         return (
             <div className={classes.buttons}>
                 <Link to={'./'} className={classes.backButton}>
-                    Back
+                    <FormatListBulletedIcon fontSize="large"/>
                  </Link>
             </div>
         );

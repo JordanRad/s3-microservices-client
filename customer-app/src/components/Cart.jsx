@@ -64,10 +64,14 @@ const Cart = (props) => {
     }
 
 
+    const submitHandler = (e)=>{
+        e.preventDefault()
+        window.location.href="./checkout"
+    }
     return (
         <>
             <Typography className={classes.heading} variant="h4">Your Cart</Typography>
-            <Button disabled={cart.length===0} variant="outlined" className={classes.backButton} href='./checkout'>Proceed to checkout</Button>
+            {cart.length!==0?<Button variant="outlined" className={classes.backButton} onClick={submitHandler}>Proceed to checkout</Button>:null}
             <Grid>
                 
                 <List component="nav">

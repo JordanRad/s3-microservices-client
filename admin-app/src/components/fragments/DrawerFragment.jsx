@@ -10,7 +10,9 @@ import { Link } from 'react-router-dom';
 import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 import AccountBoxRoundedIcon from '@material-ui/icons/AccountBoxRounded';
-import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
+import FeaturedPlayListIcon from '@material-ui/icons/FeaturedPlayList';
+import ListAltIcon from '@material-ui/icons/ListAlt';
+import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 const useStyles = makeStyles((theme) => ({
     main: {
         backgroundColor: theme.palette.primary.light,
@@ -26,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
     link: {
         display: "flex",
+        textDecoration:"none",
         alignItems: "center",
         width: "100%",
         color: theme.palette.primary.dark,
@@ -45,14 +48,11 @@ const useStyles = makeStyles((theme) => ({
 export default function DrawerFragment(props) {
     const classes = useStyles();
 
-    const logoutHandler = (e)=>{
-        sessionStorage.clear()
-    }
     let userAuthLinks;
     if (props.isAuthenticated) {
         userAuthLinks =
             <ListItem key={1}>
-                <Link onClick={logoutHandler} to={'./'} className={classes.link}>
+                <Link to={'./logout'} className={classes.link}>
                     <ExitToAppRoundedIcon className={classes.icon} />
                     <ListItemText primary={"Logout"} />
                 </Link>
@@ -61,15 +61,27 @@ export default function DrawerFragment(props) {
         userAuthLinks =
             <>
              <ListItem key={1}>
-                <Link to={'./login'} className={classes.link}>
+                <Link to={'./users'} className={classes.link}>
                     <AccountBoxRoundedIcon className={classes.icon} />
-                    <ListItemText primary={"Login"} />
+                    <ListItemText primary={"Users management"} />
                 </Link>
             </ListItem>
             <ListItem key={2}>
-                <Link to={'./register'} className={classes.link}>
-                    <AccountBoxRoundedIcon className={classes.icon} />
-                    <ListItemText primary={"Register"} />
+                <Link to={'./products'} className={classes.link}>
+                    <FeaturedPlayListIcon className={classes.icon} />
+                    <ListItemText primary={"Product management"} />
+                </Link>
+            </ListItem>
+            <ListItem key={3}>
+                <Link to={'./orders'} className={classes.link}>
+                    <FiberManualRecordIcon className={classes.icon} />
+                    <ListItemText primary={"See pending orders"} />
+                </Link>
+            </ListItem>
+            <ListItem key={4}>
+                <Link to={'./ordersarchive'} className={classes.link}>
+                    <ListAltIcon className={classes.icon} />
+                    <ListItemText primary={"See delivered orders"} />
                 </Link>
             </ListItem>
             </>
@@ -84,12 +96,6 @@ export default function DrawerFragment(props) {
                 <Divider />
                 {userAuthLinks}
                 <Divider />
-                <ListItem key={5}>
-                    <Link to={'./'} className={classes.link}>
-                        <ListAltRoundedIcon className={classes.icon} />
-                        <ListItemText primary={"Terms and Conditions"} />
-                    </Link>
-                </ListItem>
                 <ListItem disabled button key={6} onClick={props.toggleDrawer}>
                     <ListItemText primary={"Webshop LTD."} />
                 </ListItem>

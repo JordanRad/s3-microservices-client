@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import DrawerFragment from './fragments/DrawerFragment';
-import CartIconFragment from './fragments/CartIconFragment';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        marginBottom: "90px",
+        marginBottom: "85px",
     },
     menuButton: {
         marginRight: theme.spacing(4),
@@ -20,7 +18,8 @@ const useStyles = makeStyles((theme) => ({
     },
     navColor:{
         backgroundColor:theme.palette.primary.dark,
-        color:"white"
+        color:"white",
+        textDecoration:"none"
     }
 
 }));
@@ -35,9 +34,7 @@ const NavBar =(props)=> {
         setIsOpen(!isOpen);
     }
     
-    let user = JSON.parse(sessionStorage.getItem("user"));
-    let isAuthenticated = user===null
-    let content = isAuthenticated?"Welcome to Webshop":`Hello, ${user.firstName}`;
+    
     return (
         <div className={classes.root}>
             <AppBar position="fixed" className={classes.navColor}>
@@ -45,12 +42,9 @@ const NavBar =(props)=> {
                     <IconButton onClick={toggleDrawer} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" className={classes.title}>
-                       {content}
-                    </Typography>
-                    <CartIconFragment cart={props.cart}/>
+                    {props.children}
                 </Toolbar>
-                <DrawerFragment isAuthenticated={!isAuthenticated} toggleDrawer={toggleDrawer} openProp={isOpen} />
+                <DrawerFragment toggleDrawer={toggleDrawer} openProp={isOpen} />
             </AppBar>
         </div>
     );

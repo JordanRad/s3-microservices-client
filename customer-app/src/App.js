@@ -10,6 +10,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Cart from './components/Cart';
 import Checkout from './components/Checkout';
+import PrivateRoute from './components/PrivateRoute';
 const App = () => {
   let theme = createMuiTheme({
     palette: {
@@ -29,13 +30,22 @@ const App = () => {
 
   const [cart,setCart]  = useState(cf.getCart());
 
+  
     const refreshCartIconHandler = ()=>{
         setCart(cf.getCart())
     }
   
-  let user= {name: "Jordan",lastName: "Radushev",address: {} }
-  localStorage.setItem("user",JSON.stringify(user));
-  localStorage.setItem("order",JSON.stringify([]));
+  // let user= {name: "Jordan",lastName: "Radushev",address: {},email:"dani.radushev@gmail.com" }
+  // localStorage.setItem("user",JSON.stringify(user));
+  // localStorage.setItem("order",JSON.stringify([]));
+  
+  let user = JSON.parse(sessionStorage.getItem("user"))
+  let content = (<Container style={{paddingLeft:0,paddingRight:0}}>
+    <Checkout />
+  </Container>);
+  let PrivateRoute = user?content:<Redirect to={"/login"}/>
+
+  
   return (
     <Router>
       <ThemeProvider theme={theme}>
@@ -60,9 +70,7 @@ const App = () => {
               </Container>
             </Route>
             <Route exact strict path={"/checkout"}>
-              <Container style={{paddingLeft:0,paddingRight:0}}>
-                <Checkout />
-              </Container>
+              {PrivateRoute}
             </Route>
             <Route path="*">
               <Redirect to={'/'} />

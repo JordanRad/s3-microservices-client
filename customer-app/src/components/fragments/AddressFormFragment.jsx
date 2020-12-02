@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 const AddressFormFragment = (props) => {
   const classes = useStyles();
   let emptyCounter = 4;
-  let fullAddress ={};
+  let fullAddress = {};
 
   const validateInputs = (e) => {
     let city = document.getElementById('city').value;
@@ -32,8 +32,12 @@ const AddressFormFragment = (props) => {
   }
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h5" gutterBottom>
         Shipping address
+      </Typography>
+
+      <Typography variant="h5" gutterBottom>
+        {props.user.firstName + " " + props.user.lastName}
       </Typography>
       <Typography variant="body2" gutterBottom>
         *please fill every field of the address form to proceed

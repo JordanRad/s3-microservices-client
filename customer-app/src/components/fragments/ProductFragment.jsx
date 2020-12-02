@@ -13,10 +13,13 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.primary.light,
         textAlign: "center",
         [theme.breakpoints.only('xs')]: {
-            height: "345px"
+            height: "350px"
         },
         [theme.breakpoints.up('sm')]: {
-            height: "355px"
+            height: "360px"
+        },
+        [theme.breakpoints.up('md')]: {
+            height: "375px"
         },
     },
     fragmentButton: {
