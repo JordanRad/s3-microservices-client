@@ -45,33 +45,41 @@ const useStyles = makeStyles((theme) => ({
 export default function DrawerFragment(props) {
     const classes = useStyles();
 
-    const logoutHandler = (e)=>{
+    const logoutHandler = (e) => {
         sessionStorage.clear()
     }
     let userAuthLinks;
     if (props.isAuthenticated) {
-        userAuthLinks =
+        userAuthLinks = 
+        <>
             <ListItem key={1}>
                 <Link onClick={logoutHandler} to={'./'} className={classes.link}>
                     <ExitToAppRoundedIcon className={classes.icon} />
                     <ListItemText primary={"Logout"} />
                 </Link>
             </ListItem>
+            <ListItem key={2}>
+                <Link to={'./myprofile'} className={classes.link}>
+                    <AccountBoxRoundedIcon className={classes.icon} />
+                    <ListItemText primary={"My profile"} />
+                </Link>
+            </ListItem>
+        </>
     } else {
         userAuthLinks =
             <>
-             <ListItem key={1}>
-                <Link to={'./login'} className={classes.link}>
-                    <AccountBoxRoundedIcon className={classes.icon} />
-                    <ListItemText primary={"Login"} />
-                </Link>
-            </ListItem>
-            <ListItem key={2}>
-                <Link to={'./register'} className={classes.link}>
-                    <AccountBoxRoundedIcon className={classes.icon} />
-                    <ListItemText primary={"Register"} />
-                </Link>
-            </ListItem>
+                <ListItem key={1}>
+                    <Link to={'./login'} className={classes.link}>
+                        <AccountBoxRoundedIcon className={classes.icon} />
+                        <ListItemText primary={"Login"} />
+                    </Link>
+                </ListItem>
+                <ListItem key={2}>
+                    <Link to={'./register'} className={classes.link}>
+                        <AccountBoxRoundedIcon className={classes.icon} />
+                        <ListItemText primary={"Register"} />
+                    </Link>
+                </ListItem>
             </>
     }
     const list = (

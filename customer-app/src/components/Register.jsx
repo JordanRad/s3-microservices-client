@@ -10,9 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
+
 const useStyles = makeStyles((theme) => ({
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(2),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -24,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(3),
+        '& .MuiOutlinedInput-input': {
+            padding: "27.7px 11px"
+        }
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
@@ -34,6 +38,7 @@ const Register = () => {
     const classes = useStyles();
 
     return (
+
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
@@ -112,6 +117,7 @@ const Register = () => {
                 </form>
             </div>
         </Container>
+
     );
 }
 export default Register;

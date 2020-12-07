@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 const ReviewFragment = () => {
     const classes = useStyles();
     const user = JSON.parse(sessionStorage.getItem("user"));
-    const address = user.address.country.toUpperCase()+ ": "+user.address.zip.toUpperCase()+"- "+user.address.address
+    const address = user.address.countryCode.toUpperCase()+ ": "+user.address.zipCode.toUpperCase()+"- "+user.address.street
     let cartItems =cf.itemQuantityCart()
 
     return (

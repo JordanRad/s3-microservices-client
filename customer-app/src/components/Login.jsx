@@ -13,7 +13,7 @@ import { Divider } from '@material-ui/core';
 import CommunicationService from '../services/CommunicationService';
 const useStyles = makeStyles((theme) => ({
     paper: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(2),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -61,7 +61,7 @@ const Login = () => {
                 CommunicationService.login(email, password).then(r => {
                     if(r!==""){
                     sessionStorage.setItem("user", JSON.stringify(r))
-                    window.location.href="./checkout"
+                    window.location.href="./"
                     }
                 })
             }

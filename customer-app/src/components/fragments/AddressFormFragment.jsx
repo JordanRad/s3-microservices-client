@@ -14,6 +14,9 @@ const AddressFormFragment = (props) => {
   let emptyCounter = 4;
   let fullAddress = {};
 
+  let userAddress = JSON.parse(sessionStorage.getItem("user")).address;
+
+
   const validateInputs = (e) => {
     let city = document.getElementById('city').value;
     let address = document.getElementById('address').value;
@@ -26,7 +29,7 @@ const AddressFormFragment = (props) => {
     if (country !== "") emptyCounter--;
 
     if (emptyCounter === 0) {
-      fullAddress = { city: city, country: country, zip: zip, address: address }
+      fullAddress = { city: city, countryCode: country, zipCode: zip, street: address }
       props.validationHandler(fullAddress)
     }
   }
@@ -46,6 +49,7 @@ const AddressFormFragment = (props) => {
         <Grid item xs={12}>
           <TextField
             className={classes.inputFields}
+            defaultValue={userAddress!==null?userAddress.street:null}
             required
             id="address"
             name="address"
@@ -58,6 +62,7 @@ const AddressFormFragment = (props) => {
         <Grid item xs={12} sm={6}>
           <TextField
             className={classes.inputFields}
+            defaultValue={userAddress!==null?userAddress.city:null}
             required
             id="city"
             name="city"
@@ -70,6 +75,7 @@ const AddressFormFragment = (props) => {
         <Grid item xs={12} sm={6}>
           <TextField
             className={classes.inputFields}
+            defaultValue={userAddress!==null?userAddress.zipCode:null}
             required
             id="zip"
             name="zip"
@@ -82,6 +88,7 @@ const AddressFormFragment = (props) => {
         <Grid item xs={12} sm={6}>
           <TextField
             className={classes.inputFields}
+            defaultValue={userAddress!==null?userAddress.countryCode:null}
             required
             id="country"
             name="country"

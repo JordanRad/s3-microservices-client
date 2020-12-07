@@ -26,15 +26,48 @@ class CommunicationService {
             })
             .catch(error => console.log(error));
         return result;
+    
+    
+    }
+
+    static async updateUser(){
+        let user = JSON.parse(sessionStorage.getItem("user"))
+        let token = user.token;
+        let updatedUser = {
+            email: user.email,
+            password: user.password,
+            firstName:user.firstName,
+            lastName:user.lastName,
+            address:user.address
+        }
+        console.log(updatedUser)
+        let result 
+        await axios.put(`http://localhost:8080/account-service/api/users/${user.id}`,updatedUser,{
+            headers:{
+                "Authorization":`Bearer ${token}`
+            }
+        })
+            .then(res => result = res.data)
+            .catch(e => console.log(e))
+
+        return result;
     }
     static async sendOrder(order) {
+        let user = JSON.parse(sessionStorage.getItem("user"))
+        let token = user.token
        let result 
-        await axios.post("http://localhost:8080/order-service/api/orders/",order)
+        await axios.post("http://localhost:8080/order-service/api/orders/",order,{
+            headers:{
+                "Authorization":`Bearer ${token}`
+            }
+        })
             .then(res => result = res.data.split(',')[1])
             .catch(e => console.log(e))
 
         return result;
     }
+
 }
+
 
 export default CommunicationService;

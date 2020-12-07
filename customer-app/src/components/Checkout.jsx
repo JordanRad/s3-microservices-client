@@ -72,21 +72,25 @@ const steps = ['Shipping address', 'Order review'];
 
 
 const Checkout = () => {
-
   const classes = useStyles();
+  let user = JSON.parse(sessionStorage.getItem('user'))
 
   const [activeStep, setActiveStep] = useState(0);
 
-  const [addressValidation, setAddressValidation] = useState(false)
+  const [addressValidation, setAddressValidation] = useState(user.address!==null?true:false)
 
+  const [address,setAddress] = useState(null);
   const [orderNumber, setOrderNumber] = useState("000000000")
-  let user = JSON.parse(sessionStorage.getItem('user'))
+  
+
 
   const addressValidationHandler = (address) => {
     setAddressValidation(true)
 
-    user.address = address
-    sessionStorage.setItem('user', JSON.stringify(user));
+    setAddress(address);
+
+    //user.address = address
+    //sessionStorage.setItem('user', JSON.stringify(user));
   }
   const getStepContent = (step) => {
     switch (step) {
@@ -102,20 +106,22 @@ const Checkout = () => {
   const handleNext = () => {
     setActiveStep(activeStep + 1);
     if (activeStep === 1) {
+      console.log(address);
       let orderRequest = {
         user: {
           id: 1,
           email: user.email,
-          address: user.address.country + ", " + user.address.city + " - " + user.address.address + ", " + user.address.zip
+          address: user.address.countryCode + ", " + user.address.city + " - " + user.address.street + ", " + user.address.zipCode
         },
-        orderNumber: user.firstName.substring(0, 1).toUpperCase() + user.lastName.substring(0, 1).toUpperCase() + Date.now().toString() + "XTX" + user.address.zip.substring(0, 2),
+        orderNumber: user.firstName.substring(0, 1).toUpperCase() + user.lastName.substring(0, 1).toUpperCase() + Date.now().toString() + "XTX" + user.address.zipCode.substring(0, 2),
         products: cf.itemQuantityCart()
       };
 
       console.log(JSON.stringify(orderRequest))
       CommunicationService.sendOrder(orderRequest).then(r => setOrderNumber(r))
-
-
+    }else{
+      user.address = address;
+      sessionStorage.setItem("user",JSON.stringify(user));
     }
   };
 
