@@ -9,10 +9,11 @@ import ProductList from './components/ProductList';
 import Login from './components/Login';
 import Register from './components/Register';
 import Cart from './components/Cart';
-import Checkout from './components/Checkout';
+import ProductDetails from './components/ProductDetails';
 import CheckoutPage from './pages/CheckoutPage';
 import MyProfilePage from './pages/MyProfilePage';
 import PrivateRoute from './components/PrivateRoute';
+import { useHistory } from "react-router-dom";
 const App = () => {
   let theme = createMuiTheme({
     palette: {
@@ -32,19 +33,12 @@ const App = () => {
 
   const [cart, setCart] = useState(cf.getCart());
 
-
+  let history = useHistory();
   const refreshCartIconHandler = () => {
     setCart(cf.getCart())
   }
 
-  // let user= {name: "Jordan",lastName: "Radushev",address: {},email:"dani.radushev@gmail.com" }
-  // localStorage.setItem("user",JSON.stringify(user));
-  // localStorage.setItem("order",JSON.stringify([]));
-
   let user = JSON.parse(sessionStorage.getItem("user"))
-  //let content = ();
-  //let PrivateRoute = user ? content : <Redirect to={"/login"} />
-
 
   return (
     <Router>
@@ -68,6 +62,9 @@ const App = () => {
               <Container>
                 <Cart refreshCart={refreshCartIconHandler} />
               </Container>
+            </Route>
+            <Route exact strict path={"/item/:id"}>
+             <ProductDetails/>
             </Route>
             <PrivateRoute path={'/checkout'} exact={true} component={CheckoutPage} />
             <PrivateRoute path={'/myprofile'} exact={true} component={MyProfilePage} />

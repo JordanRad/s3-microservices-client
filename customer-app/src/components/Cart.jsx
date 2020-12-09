@@ -52,7 +52,6 @@ const Cart = (props) => {
         //Clear the 'undefined' objects in the order array
         .filter((item) => typeof item != 'undefined');
         
-
     let orderItemsList, orderTotalSum;
 
     if (order.lenght !== 0) {

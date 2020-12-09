@@ -1,16 +1,19 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import { Button } from '@material-ui/core';
 const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
         flex: 1,
-        marginTop: '3%',
+        justifyContent:"space-between",
+        marginLeft:"2.5%",
+        marginRight:"2.5%",
         "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
             borderColor: theme.palette.primary.dark,
         },
         padding: "0px",
-        marginBottom:'11px'
+        marginBottom:'12px'
 
     },
     input: {
@@ -22,16 +25,30 @@ const useStyles = makeStyles(theme => ({
     },
     textField: {
         flex: 0.40,
+    },
+    button:{
+        flex: 0.20,
+        backgroundColor:theme.palette.primary.dark,
+        color:theme.palette.primary.light,
+        borderColor: theme.palette.primary.dark,
+        '&:hover': {
+            backgroundColor: theme.palette.primary.light,
+            color:theme.palette.primary.dark,
+        },
     }
+
 }));
 
 const SearchbarFragment = (props) => {
     const classes = useStyles();
 
+    const onChangeHandler=(e)=>{
+        props.onChange(e.target.value)
+    }
     return (
         <div className={classes.root}>
             <TextField
-            onChange={props.onChange}
+            onChange={onChangeHandler}
                 className={classes.textField}
                 color="primary"
                 id="cityInput"
@@ -39,6 +56,9 @@ const SearchbarFragment = (props) => {
                 inputProps={{ className: classes.input }}
                 InputLabelProps={{ className: classes.label }}
             />
+            { !window.location.href.includes("orders")?
+                <Button className={classes.button}>Add new product</Button>:null}
+
         </div>
     );
 }

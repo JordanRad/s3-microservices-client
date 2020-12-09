@@ -9,7 +9,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import NavBar from '../components/NavBar';
 import CommunicationService from '../services/CommunicationService';
 import { Alert, AlertTitle } from '@material-ui/lab';
 
@@ -52,7 +51,7 @@ const MyProfilePage = () => {
 
     let user = JSON.parse(sessionStorage.getItem("user"));
 
-    const [fname, setFname] = useState(user.firstName !== null)
+    const [fname, setFname] = useState(user.firstName)
     const [lname, setLname] = useState(user.lastName)
     const [email, setEmail] = useState(user.email)
     const [address, setAddress] = useState(user.address != null ? user.address.street : "")
@@ -121,17 +120,10 @@ const MyProfilePage = () => {
         let a = password;
         let b = cpassword
         if (a === b) {
-            let fname1;
-            let lname1;
-            let pass1;
-            console.log("pass")
+            let fname1, lname1,pass1;
             fname === "" ? fname1 = user.firstName : fname1 = fname
-
             lname === "" ? lname1 = user.lastName : lname1 = lname
-
             password === "" ? pass1 = "Not changed" : pass1 = password
-
-
             newUser = {
                 token: user.token,
                 id: user.id,
@@ -151,7 +143,6 @@ const MyProfilePage = () => {
         }
 
         console.log(newUser)
-        console.log(sessionStorage.getItem("user"))
 
         CommunicationService.updateUser(newUser).then(r => {
             if (r.includes("Successfully")) {
@@ -162,9 +153,7 @@ const MyProfilePage = () => {
             }
         });
     }
-    console.log(fname)
     return (
-
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
@@ -178,9 +167,7 @@ const MyProfilePage = () => {
                 <Link className={classes.link} onClick={goBackHandler}>
                     In case you will not change anything click here to go back
                 </Link>
-                {errorMessage}
                 <form className={classes.form} noValidate>
-
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
@@ -307,11 +294,13 @@ const MyProfilePage = () => {
                             />
                         </Grid>
                     </Grid>
+                    {errorMessage}
                     <Button
                         onClick={onSaveHandler} fullWidth variant="contained" color="primary" className={classes.submit}>
                         Save Changes
                     </Button>
                 </form>
+               
             </div>
         </Container>
 

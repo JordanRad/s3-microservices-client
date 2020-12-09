@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,7 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import Login from './components/Login';
 import NavBar from './components/NavBar';
 import ProductDashBoardPage from './pages/ProductDashboardPage';
-import UsersDashBoardPage from './pages/UsersDashboardPage';
+import PrivateRoute from './components/PrivateRoute';
+import CurrentOrdersPage from './pages/CurrentOrdersPage';
 function App() {
   let theme = createMuiTheme({
     palette: {
@@ -43,19 +44,19 @@ function App() {
                   </Typography>
               </NavBar>
             </Route> */}
-            <Route exact path="/users">
+
+            {/* <Route exact path="/users">
               <UsersDashBoardPage/>
-            </Route>
-            <Route exact path="/products">
-              <ProductDashBoardPage/>
-            </Route>
-            <Route exact path="/orders">
+            </Route> */}
+            <PrivateRoute exact path="/products" component={ProductDashBoardPage}/>
+            <PrivateRoute exact path="/orders" component={CurrentOrdersPage}/>
+            {/* <Route exact path="/orders">
               <NavBar>
                 <Typography variant="h6">
                   Current Orders Dashboard
                   </Typography>
               </NavBar>
-            </Route>
+            </Route> */}
             <Route exact path="/ordersarchive">
               <NavBar>
                 <Typography variant="h6">

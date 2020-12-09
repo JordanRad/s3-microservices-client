@@ -30,9 +30,10 @@ const useStyles = makeStyles((theme) => ({
 const OrderItem = (props) => {
     const classes = useStyles();
     const onClickHandler = (e) => {
-        let deletedItemName = e.target.parentNode.getAttribute("item");
-        cf.deleteFromCart(deletedItemName)
-        props.refreshCart()
+        let deletedItemName = props.item.name;
+        console.log(deletedItemName)
+         cf.deleteFromCart(deletedItemName)
+         props.refreshCart()
     }
     return (
         <>
@@ -45,10 +46,10 @@ const OrderItem = (props) => {
                 {/* <Button
                     size="small"
                     className={classes.fragmentButton}
-                    item={props.item.name} onClick={onClickHandler} variant="outlined">X
+                    item={props.item.name} onClick={onClickHandler} variant="outlined">-
                 </Button> */}
-                <IconButton aria-label="delete" size='small' className={classes.fragmentButton} onClick={onClickHandler}>
-                    <DeleteIcon />
+                <IconButton aria-label="delete" size='small' item={props.item.name}  className={classes.fragmentButton} onClick={onClickHandler}>
+                    <DeleteIcon item={props.item.name} />
                 </IconButton>
             </ListItem>
 

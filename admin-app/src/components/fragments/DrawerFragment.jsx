@@ -60,12 +60,6 @@ export default function DrawerFragment(props) {
     } else {
         userAuthLinks =
             <>
-             <ListItem key={1}>
-                <Link to={'./users'} className={classes.link}>
-                    <AccountBoxRoundedIcon className={classes.icon} />
-                    <ListItemText primary={"Users management"} />
-                </Link>
-            </ListItem>
             <ListItem key={2}>
                 <Link to={'./products'} className={classes.link}>
                     <FeaturedPlayListIcon className={classes.icon} />

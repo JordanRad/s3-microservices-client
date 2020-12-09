@@ -26,10 +26,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NavBar =(props)=> {
-
     const classes = useStyles();
     const [isOpen, setIsOpen] = useState(false);
-
 
     const toggleDrawer = (event) => {
         setIsOpen(!isOpen);

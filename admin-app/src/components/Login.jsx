@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,7 +7,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import Alert from '@material-ui/lab/Alert'
+import AuthService from '../services/AuthService';
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(8),
@@ -31,6 +32,31 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
     const classes = useStyles();
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const [error, setError] = useState("");
+
+    const emailHandler = (e) => {
+        setEmail(e.target.value)
+    }
+
+    const passwordHandler = (e) => {
+        setPassword(e.target.value)
+    }
+    const loginHandler = (e) => {
+        e.preventDefault();
+        if (email === "" || password === "") {
+            setError("Fill your inputs")
+        } else {
+            AuthService.login(email, password)
+            .then(r => {
+                sessionStorage.setItem("user",JSON.stringify(r.data))
+                window.location.href="./products"
+            })
+            .catch(e=>setError("Wrong credentials"))
+        }
+    }
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -42,7 +68,9 @@ const Login = () => {
                     Login
         </Typography>
                 <form className={classes.form} noValidate>
+                    {error!==""?<Alert severity="error">{error}</Alert>:null}
                     <TextField
+                        onChange={emailHandler}
                         variant="outlined"
                         margin="normal"
                         required
@@ -54,6 +82,7 @@ const Login = () => {
                         autoFocus
                     />
                     <TextField
+                        onChange={passwordHandler}
                         variant="outlined"
                         margin="normal"
                         required
@@ -70,6 +99,7 @@ const Login = () => {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={loginHandler}
                     >
                         Sign In
                     </Button>

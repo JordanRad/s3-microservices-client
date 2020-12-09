@@ -11,6 +11,7 @@ import ExitToAppRoundedIcon from '@material-ui/icons/ExitToAppRounded';
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 import AccountBoxRoundedIcon from '@material-ui/icons/AccountBoxRounded';
 import ListAltRoundedIcon from '@material-ui/icons/ListAltRounded';
+import ListAltIcon from '@material-ui/icons/ListAlt';
 const useStyles = makeStyles((theme) => ({
     main: {
         backgroundColor: theme.palette.primary.light,
@@ -50,21 +51,28 @@ export default function DrawerFragment(props) {
     }
     let userAuthLinks;
     if (props.isAuthenticated) {
-        userAuthLinks = 
-        <>
-            <ListItem key={1}>
-                <Link onClick={logoutHandler} to={'./'} className={classes.link}>
-                    <ExitToAppRoundedIcon className={classes.icon} />
-                    <ListItemText primary={"Logout"} />
-                </Link>
-            </ListItem>
-            <ListItem key={2}>
-                <Link to={'./myprofile'} className={classes.link}>
-                    <AccountBoxRoundedIcon className={classes.icon} />
-                    <ListItemText primary={"My profile"} />
-                </Link>
-            </ListItem>
-        </>
+        userAuthLinks =
+            <>
+                <ListItem key={3}>
+                    <Link to={'./'} className={classes.link}>
+                        <ListAltIcon className={classes.icon} />
+                        <ListItemText primary={"Products"} />
+                    </Link>
+                </ListItem>
+                <ListItem key={2}>
+                    <Link to={'./myprofile'} className={classes.link}>
+                        <AccountBoxRoundedIcon className={classes.icon} />
+                        <ListItemText primary={"My profile"} />
+                    </Link>
+                </ListItem>
+                <ListItem key={1}>
+                    <Link onClick={logoutHandler} to={'./'} className={classes.link}>
+                        <ExitToAppRoundedIcon className={classes.icon} />
+                        <ListItemText primary={"Logout"} />
+                    </Link>
+                </ListItem>
+
+            </>
     } else {
         userAuthLinks =
             <>

@@ -15,8 +15,6 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.text.secondary,
     },
 }));
-
-
 const ProductList = (props) => {
     // Get order from global state
     const [products, setProducts] = useState([])

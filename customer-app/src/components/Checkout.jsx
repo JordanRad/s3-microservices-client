@@ -79,7 +79,7 @@ const Checkout = () => {
 
   const [addressValidation, setAddressValidation] = useState(user.address!==null?true:false)
 
-  const [address,setAddress] = useState(null);
+  const [address,setAddress] = useState(user.address!==null?user.address:null);
   const [orderNumber, setOrderNumber] = useState("000000000")
   
 
@@ -128,7 +128,8 @@ const Checkout = () => {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  //console.log(user)
+  console.log(user)
+  console.log(address)
   return (
     <React.Fragment>
       <CssBaseline />

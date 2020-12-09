@@ -39,7 +39,7 @@ const ReviewFragment = () => {
                 ))}
                 <ListItem className={classes.listItem}>
                     <Typography variant="body1" className={classes.total}>
-                        {"Total: € "+cartItems.reduce(((acc,cv)=>acc+cv.price*cv.quantity),0)}
+                        {"Total: € "+cartItems.reduce(((acc,cv)=>acc+cv.price*cv.quantity),0).toFixed(2)}
                      </Typography>
                 </ListItem>
             </List>

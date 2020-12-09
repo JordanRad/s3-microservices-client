@@ -1,17 +1,14 @@
 import axios from 'axios';
-
-const API_URL = "http://localhost:8090/api";
-
 class AuthService {
-    login(username, password) {
+    login(email, password) {
         let user = {
-            username: username,
+            email: email,
             password: password
         }
-        return axios.post(API_URL + "/admin", user);
+        return axios.post("http://localhost:8080/account-service/api/admin", user);
     }
     logout(){
-        localStorage.removeItem('userToken');
+        sessionStorage.clear();
     }
 }
 export default new AuthService();

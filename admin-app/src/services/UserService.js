@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-const URL = 'http://localhost:8090/api/users';
-const token = JSON.parse(localStorage.getItem("userToken"));
+const URL = 'http://localhost:8080/account-service/api/users/';
+// const token = JSON.parse(sessionStorage.getItem("user")).token;
 const config = {
     headers:{
-        Authorization:`Bearer ${token}`
+        Authorization:`Bearer hddh`
     }
 }
 class UserService {
     getUsers() {
-        return axios.get(URL,config);
+        return axios.get(URL+"getAll",config);
     }
     getuserById(id) {
         return axios.get(URL + `/${id}`);
