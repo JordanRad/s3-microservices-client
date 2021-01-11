@@ -15,11 +15,13 @@ import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: 900,
-        margin: "auto"
+        margin: "auto",
+        marginTop:"1%",
+        paddingTop:"1%"
     },
     media: {
         height: 0,
-        paddingTop: '56.25%', // 16:9
+        paddingTop: '44.25%', // 16:9
     },
     avatar: {
         backgroundColor: theme.palette.primary.dark,
@@ -62,10 +64,10 @@ const ProductDetails = () => {
     } else {
         return (
             <>
+                <Card className={classes.root}>
                 <CardActions disableSpacing>
                     <Button onClick={goBackHandler} disabled={!item.quantity > 0} className={classes.fragmentButton} id={item.id} variant="outlined">Back to products</Button>
                 </CardActions>
-                <Card className={classes.root}>
                     <CardHeader
                         avatar={
                             <Avatar aria-label="recipe" className={classes.avatar}>

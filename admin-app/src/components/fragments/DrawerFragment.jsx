@@ -72,12 +72,7 @@ export default function DrawerFragment(props) {
                     <ListItemText primary={"See pending orders"} />
                 </Link>
             </ListItem>
-            <ListItem key={4}>
-                <Link to={'./ordersarchive'} className={classes.link}>
-                    <ListAltIcon className={classes.icon} />
-                    <ListItemText primary={"See delivered orders"} />
-                </Link>
-            </ListItem>
+            
             </>
     }
     const list = (

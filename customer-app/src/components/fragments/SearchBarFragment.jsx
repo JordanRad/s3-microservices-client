@@ -4,8 +4,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-
 import { Container } from '@material-ui/core';
+
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -44,7 +44,6 @@ const SearchBar = (props) => {
         setSelectedCategory(event.target.value)
         props.onSelect(event.target.value);
     };
-    console.log(selectedCategory)
     return (
         <Container className={classes.root}>
             <FormControl className={classes.formControl}>
@@ -66,9 +65,7 @@ const SearchBar = (props) => {
                     <MenuItem value={"VideoGames"}>Video Games</MenuItem>
                 </Select>
             </FormControl>
-
         </Container>
     )
 }
-
 export default SearchBar;

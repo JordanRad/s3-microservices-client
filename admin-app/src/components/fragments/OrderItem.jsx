@@ -50,16 +50,11 @@ const OrderItem = (props) => {
     const [status, setStatus] = useState("")
     const [id, setId] = useState(props.item.id);
     const [quantity, setQuantity] = useState(0);
-    // const onDeleteHandler = (e, id) => {
-    //     console.log(id)
-    //     //ProductService.deleteProduct(id).then(r => console.log(r))
-    //     window.location.reload();
-    // }
 
-    const onCheckClick = (e,id,quantity)=>{
+    const onCheckClick = (e, id, quantity) => {
         setId(id);
         setQuantity(quantity)
-     }
+    }
     //console.log(id)
     useEffect(() => {
         ProductService.getProductById(id).then(r => {
@@ -70,21 +65,15 @@ const OrderItem = (props) => {
             setId(0)
             setQuantity(0)
 
-        }
-        )
-    
-    }, [id])
+        });
+    }, [props])
     //console.log(status)
     if (props.item !== null) {
         return (
             <Grid className={classes.details} container>
                 <ListItem style={{ textAlign: "center", padding: "10px" }}>
                     <Typography variant="body2">
-                        {props.item.name + " - "}<strong>{"€ "+props.item.price + " "}x{" " + props.item.quantity}</strong>
-                    </Typography>
-                    <Button size="small" onClick={(e)=>onCheckClick(e,props.item.id,props.item.quantity)} className={classes.Btn}>Check</Button>
-                    <Typography style={{ color: status === "Not available" ? "red" : "green"}} variant="body2">
-                        <strong>{status}</strong>
+                        {props.item.name + " - "}<strong>{"€ " + props.item.price + " "}x{" " + props.item.quantity}</strong>
                     </Typography>
                 </ListItem>
             </Grid>

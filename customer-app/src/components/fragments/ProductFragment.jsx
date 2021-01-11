@@ -16,10 +16,10 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "center",
         
         [theme.breakpoints.only('xs')]: {
-            height: "350px"
+            height: "96%"
         },
-        [theme.breakpoints.up('sm')]: {
-            height: "360px"
+        [theme.breakpoints.only('sm')]: {
+            height: "93%",
         },
         [theme.breakpoints.up('md')]: {
             height: "385px"

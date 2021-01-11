@@ -13,24 +13,27 @@ class OrderService {
         }
         return axios.get(URL+"getAllNew",config);
     }
-    getuserById(id) {
-        return axios.get(URL + `/${id}`);
-    }
-    createUser(user) {
-        return axios.post(URL, user);
-    }
-    updateUser(id, user) {
-        return axios.put(URL + `/${id}`, user);
-    }
 
-    deleteProduct(id){
+    getAllNewAndProcessingOrders() {
         let user = JSON.parse(sessionStorage.getItem("user"))?JSON.parse(sessionStorage.getItem("user")):null;
         const config = {
             headers:{
                 Authorization:`Bearer ${user.token}`
             }
         }
-        return axios.delete(URL+`${id}`,config);
+        return axios.get(URL+"getAllNewAndProcessing",config);
+    }
+    
+
+    cancelOrder(orderNumber){
+        let user = JSON.parse(sessionStorage.getItem("user"))?JSON.parse(sessionStorage.getItem("user")):null;
+        console.log(user.token)
+        const config = {
+            headers:{
+                Authorization:`Bearer ${user.token}`
+            }
+        }
+        return axios.put(URL+`${orderNumber}?status=CANCELED`,"",config)
     }
 
 }

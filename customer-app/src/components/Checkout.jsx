@@ -80,10 +80,9 @@ const Checkout = () => {
   const [addressValidation, setAddressValidation] = useState(user.address!==null?true:false)
 
   const [address,setAddress] = useState(user.address!==null?user.address:null);
+ 
   const [orderNumber, setOrderNumber] = useState("000000000")
   
-
-
   const addressValidationHandler = (address) => {
     setAddressValidation(true)
 
@@ -109,7 +108,7 @@ const Checkout = () => {
       console.log(address);
       let orderRequest = {
         user: {
-          id: 1,
+          id: user.id,
           email: user.email,
           address: user.address.countryCode + ", " + user.address.city + " - " + user.address.street + ", " + user.address.zipCode
         },

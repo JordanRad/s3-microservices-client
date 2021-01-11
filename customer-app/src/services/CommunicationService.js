@@ -1,5 +1,16 @@
 import axios from 'axios';
+
 class CommunicationService {
+    static async register(user) {
+        let result = [];
+        await axios.post('http://localhost:8080/account-service/api/register', user)
+            .then((res) => {
+                result = res.data ? res.data : ["empty"]
+            })
+            .catch(error => console.log(error));
+        return result;
+    }
+
     static async getProducts() {
         let result = [];
         await axios.get('http://localhost:8080/product-service/api/products/getAll', {
@@ -14,6 +25,7 @@ class CommunicationService {
         return result;
     }
 
+
     static async login(email, password) {
         let result = "";
         let user = {
@@ -26,8 +38,6 @@ class CommunicationService {
             })
             .catch(error => console.log(error));
         return result;
-
-
     }
 
     static async updateUser(user) {
@@ -48,6 +58,7 @@ class CommunicationService {
         let user = JSON.parse(sessionStorage.getItem("user"))
         let token = user.token
         let result
+        //console.log(order)
         await axios.post("http://localhost:8080/order-service/api/orders/", order, {
                 headers: {
                     "Authorization": `Bearer ${token}`

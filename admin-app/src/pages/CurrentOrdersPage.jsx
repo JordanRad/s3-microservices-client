@@ -22,7 +22,10 @@ const CurrentOrdersPage = () => {
     const [item, setItem] = useState(null);
 
     useEffect(() => {
-        OrderService.getAllNewOrders().then(r => setOrders(r.data))
+        OrderService.getAllNewAndProcessingOrders().then(r => {
+            setOrders(r.data)
+        })
+        
     }, [])
 
     const onInputChangeHandler = (input) => {

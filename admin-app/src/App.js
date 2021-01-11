@@ -37,26 +37,8 @@ function App() {
             <Route exact path="/">
               <Login />
             </Route>
-            {/* <Route exact path="/dashboard">
-              <NavBar>
-                <Typography variant="h6">
-                  Welcome to Webshop Admin Panel
-                  </Typography>
-              </NavBar>
-            </Route> */}
-
-            {/* <Route exact path="/users">
-              <UsersDashBoardPage/>
-            </Route> */}
             <PrivateRoute exact path="/products" component={ProductDashBoardPage}/>
             <PrivateRoute exact path="/orders" component={CurrentOrdersPage}/>
-            {/* <Route exact path="/orders">
-              <NavBar>
-                <Typography variant="h6">
-                  Current Orders Dashboard
-                  </Typography>
-              </NavBar>
-            </Route> */}
             <Route exact path="/ordersarchive">
               <NavBar>
                 <Typography variant="h6">

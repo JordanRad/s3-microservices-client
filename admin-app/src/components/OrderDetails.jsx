@@ -9,7 +9,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 
 import OrderItem from './fragments/OrderItem';
 import { Button, Divider, Typography } from '@material-ui/core';
-import ProductService from '../services/ProductService';
+import OrderService from '../services/OrderService';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -63,23 +63,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 const OrderDetails = (props) => {
     const classes = useStyles();
-    const onDeleteHandler = (e, id) => {
-        console.log(id)
-        ProductService.deleteProduct(id).then(r => console.log(r))
+    const onCancelHandler = (orderNumber) => {
+        
+        console.log(orderNumber)
+        OrderService.cancelOrder(orderNumber).then(r => console.log(r))
         window.location.reload();
     }
-    console.log(props.type)
-    
+
     if (props.item !== null) {
         let order = props.item
-       
-        let orderItems = props.item.products.map((item,index) => {
-            
-            return (
-                <OrderItem key={index} item={item}/>
-            )
-           
-        })
+        let orderItems = props.item.products
+            .map((item, index) => <OrderItem key={index} item={item} />)
+        let button = order.status==="NEW"?<Button size="large" className={classes.editBtn}>Process</Button>:<Button size="large" className={classes.editBtn}>Complete</Button>
         return (
             <List className={classes.root}>
                 <Typography style={{ textAlign: "center" }} variant="h5">
@@ -103,8 +98,8 @@ const OrderDetails = (props) => {
                             <DescriptionIcon />
                         </Avatar>
                     </ListItemAvatar>
-                    <Typography variant="body2">
-                        Status: {order.status}
+                    <Typography style={{ textAlign: "center" }} variant="body2">
+                        Status: <strong>{order.status}</strong>
                     </Typography>
                 </ListItem>
                 <Divider />
@@ -115,7 +110,7 @@ const OrderDetails = (props) => {
                         </Avatar>
                     </ListItemAvatar>
                     <Typography variant="body2">
-                        Sent on: {order.createdTime}
+                        Sent on: <strong>{order.createdTime}</strong>
                     </Typography>
                 </ListItem>
                 <Divider />
@@ -127,8 +122,8 @@ const OrderDetails = (props) => {
                 <Divider />
                 <Divider />
                 <ListItem className={classes.buttons} >
-                    <Button onDoubleClick={(e) => onDeleteHandler(e, order.orderNumber)} size="large" className={classes.deleteBtn}>Cancel</Button>
-                    <Button size="large" className={classes.editBtn}>Process</Button>
+                    {button}
+                    <Button onClick={(e) => onCancelHandler(order.orderNumber)} size="large" className={classes.deleteBtn}>Cancel</Button>
                 </ListItem>
             </List>
         );

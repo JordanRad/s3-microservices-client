@@ -22,11 +22,24 @@ class ProductService {
         }
         return axios.get(URL+`${id}`,config);
     }
-    createUser(user) {
-        return axios.post(URL, user);
+    createProduct(product) {
+        let user = JSON.parse(sessionStorage.getItem("user"))?JSON.parse(sessionStorage.getItem("user")):null;
+        const config = {
+            headers:{
+                Authorization:`Bearer ${user.token}`
+            }
+        }
+
+        return axios.post(URL,product,config);
     }
-    updateUser(id, user) {
-        return axios.put(URL + `/${id}`, user);
+    updateProduct(product) {
+        let user = JSON.parse(sessionStorage.getItem("user"))?JSON.parse(sessionStorage.getItem("user")):null;
+        const config = {
+            headers:{
+                Authorization:`Bearer ${user.token}`
+            }
+        }
+        return axios.put(URL , product,config);
     }
 
     deleteProduct(id){

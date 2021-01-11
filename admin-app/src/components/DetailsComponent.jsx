@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -12,6 +12,7 @@ import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { Button, Divider, Typography } from '@material-ui/core';
 import ProductService from '../services/ProductService';
+import ProductDialog from './fragments/ProductDialog';
 const useStyles = makeStyles((theme) => ({
     root: {
         height: "550px",
@@ -50,14 +51,32 @@ const useStyles = makeStyles((theme) => ({
     }
 
 }));
-const DetailsList = (props) => {
+const DetailsComponent = (props) => {
     const classes = useStyles();
+    const [isOpen,setIsOpen] = useState(false)
+    const [type,setType] = useState("");
+    const [editedItemId,setEditedItemId] = useState(-1);
+    const [p,setP] = useState({})
+    const openDialog = (menuId) => {
+        setIsOpen(true)
+        setEditedItemId(menuId)
+       
+    }
+
+    const closeDialog = () => {
+        setIsOpen(!isOpen)
+        setEditedItemId(-1)
+        setP({})
+        setType("")
+    }
+
     const onDeleteHandler = (e, id) => {
         console.log(id)
         ProductService.deleteProduct(id).then(r => console.log(r))
         window.location.reload();
     }
-    console.log(props.type)
+
+    //console.log(props)
     if (props.item !== null) {
         if (props.type === "order") {
             let order = props.item
@@ -107,8 +126,10 @@ const DetailsList = (props) => {
             );
         } else {
             let product = props.item
+           console.log(product)
             return (
                 <List className={classes.root}>
+                    <ProductDialog type = {type} closeDialog={closeDialog} isOpen={isOpen} product = {product}/>
                     <Typography style={{ textAlign: "center" }} variant="h4">
                         {product.name}
                     </Typography>
@@ -154,8 +175,21 @@ const DetailsList = (props) => {
                     </ListItem>
                     <Divider />
                     <ListItem className={classes.buttons} >
-                        <Button size="large" className={classes.editBtn}>Edit</Button>
-                        <Button onDoubleClick={(e) => onDeleteHandler(e, product.id)} size="large" className={classes.deleteBtn}>Delete</Button>
+                        <Button onClick={(e)=>{
+                            setIsOpen(!isOpen)
+                            setEditedItemId(product.id)
+                            setType("EDIT")
+                            setP(product);
+
+                        }} size="large" className={classes.editBtn}>Edit</Button>
+                        <Button 
+                        onClick={(e)=>{
+                            setIsOpen(!isOpen)
+                            setEditedItemId(product.id)
+                            setType("DELETE")
+                            setP(product);
+                        }}
+                        onDoubleClick={(e) => onDeleteHandler(e, product.id)} size="large" className={classes.deleteBtn}>Delete</Button>
                     </ListItem>
                 </List>
             );
@@ -166,11 +200,9 @@ const DetailsList = (props) => {
             <List className={classes.root}>
                 <Typography style={{ textAlign: "center" }} variant="h5">
                     Select an item
-                        </Typography>
+                </Typography>
             </List>
         )
     }
 }
-
-
-export default DetailsList;
+export default DetailsComponent;

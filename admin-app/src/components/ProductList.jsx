@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const ProductList = (props) => {
     const classes = useStyles();
-    console.log(props.orders)
+    //console.log(props.orders)
     const onClickHandler = (e, item) => {
 
         props.onClick(item)

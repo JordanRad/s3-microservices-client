@@ -6,8 +6,9 @@ import { Container } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid'
 import ProductService from '../services/ProductService';
 import ProductList from '../components/ProductList';
-import DetailsList from '../components/DetailsList';
+import DetailsComponent from '../components/DetailsComponent';
 import SearchbarFragment from '../components/fragments/SearchbarFragment'
+import { Details } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     list: {
@@ -33,7 +34,7 @@ const ProductDashBoardPage = () => {
     const onClickHandler = (item)=>{
         setItem(item);
     }
-    console.log(item)
+    //console.log(item)
     if (products === null) {
         return (
             <>
@@ -66,7 +67,7 @@ const ProductDashBoardPage = () => {
                     </Grid>
 
                     <ProductList onClick={onClickHandler} items={filtered} />
-                    <DetailsList type={"product"} item={product} />
+                    <DetailsComponent type={"product"} item={product} />
                 </Grid>
             </>
         );

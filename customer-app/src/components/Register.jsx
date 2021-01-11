@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
-
+import CommunicationService from '../services/CommunicationService';
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(2),
@@ -33,10 +33,53 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(3, 0, 2),
     },
 }));
-
+const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const Register = () => {
     const classes = useStyles();
 
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [cpassword, setCPassword] = useState("");
+
+    const [message, setMessage] = useState("");
+
+    const validateInputs = () => {
+        let c = 5
+        let errorMessage = "";
+        if (firstName.length > 0) {
+            c--
+        } else { errorMessage += "No First Name," }
+        if (lastName.length > 0) { c-- } else { errorMessage += "\nNo Last Name," }
+        if (email.length > 0 && regex.test(email)) { c-- } else { errorMessage += "\nInavlid Email,"; }
+        if (password.length > 6) { c-- } else { errorMessage += "\nPassword is too short," }
+        if (password === cpassword) { c-- } else { errorMessage += "\nPasswords do not match," }
+        console.log(errorMessage)
+        c === 0 ? setMessage("") : setMessage(errorMessage);
+        return c === 0 ? true : false
+    }
+    const registerAccount = (e) => {
+        e.preventDefault();
+        if (validateInputs()) {
+            let user = {};
+            user.firstName = firstName;
+            user.lastName = lastName;
+            user.password = password;
+            user.email = email;
+            CommunicationService.register(user)
+                .then(r => {
+                    if (r.includes("Successfully")) {
+                        window.location.href = "./"
+                    } else {
+                        setMessage(r)
+                    }
+                })
+        } else {
+            console.error("error occured")
+        }
+
+    }
     return (
 
         <Container component="main" maxWidth="xs">
@@ -47,6 +90,9 @@ const Register = () => {
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign up
+                </Typography>
+                <Typography style={{ color: "red" }} component="vody" variant="h6">
+                    {message}
                 </Typography>
                 <form className={classes.form} noValidate>
                     <Grid container spacing={2}>
@@ -60,6 +106,10 @@ const Register = () => {
                                 id="firstName"
                                 label="First Name"
                                 autoFocus
+                                onChange={(e) => {
+                                    setFirstName(e.target.value)
+
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -71,6 +121,10 @@ const Register = () => {
                                 label="Last Name"
                                 name="lastName"
                                 autoComplete="lname"
+                                onChange={(e) => {
+                                    setLastName(e.target.value)
+
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -82,6 +136,11 @@ const Register = () => {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                helperText="use a valid email address"
+                                onChange={(e) => {
+                                    setEmail(e.target.value)
+
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -94,10 +153,34 @@ const Register = () => {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                helperText="use at least 7 characters"
+                                onChange={(e) => {
+                                    setPassword(e.target.value)
+
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="cpassword"
+                                label="Confirm Password"
+                                type="password"
+                                id="cpassword"
+                                autoComplete="current-password"
+                                onChange={(e) => {
+                                    setCPassword(e.target.value)
+
+                                }}
                             />
                         </Grid>
                     </Grid>
-                    <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
+                    <Button
+
+                        type="submit" fullWidth variant="contained" color="primary" className={classes.submit}
+                        onClick={registerAccount}>
                         Sign Up
                     </Button>
                     <Grid container justify="flex-end">
