@@ -9,6 +9,9 @@ import OrderItem from './fragments/OrderItem';
 import { Button, Divider, Typography } from '@material-ui/core';
 import OrderService from '../services/OrderService';
 
+const updateOrderStatus = (orderNumber)=>{
+   return OrderService.setOrderToProcessing(orderNumber)
+}
 const useStyles = makeStyles((theme) => ({
     root: {
         height: "550px",
@@ -68,11 +71,15 @@ const OrderDetails = (props) => {
         window.location.reload();
     }
 
+    
+    const setOrderToProcessing = (orderNumber)=>{
+       updateOrderStatus(orderNumber).then(r=>window.location.reload())
+    }
     if (props.item !== null) {
         let order = props.item
         let orderItems = props.item.products
             .map((item, index) => <OrderItem key={index} item={item} />)
-        let button = order.status==="NEW"?<Button size="large" className={classes.editBtn}>Process</Button>:<Button size="large" className={classes.editBtn}>Complete</Button>
+        let button = order.status==="NEW"?<Button size="large" onClick={(e)=>setOrderToProcessing(order.orderNumber)} className={classes.editBtn}>Process</Button>:<Button size="large" className={classes.editBtn}>Complete</Button>
         return (
             <List className={classes.root}>
                 <Typography style={{ textAlign: "center" }} variant="h5">

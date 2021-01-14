@@ -25,6 +25,15 @@ class OrderService {
     }
     
 
+    setOrderToProcessing(orderNumber){
+        let user = JSON.parse(sessionStorage.getItem("user"))?JSON.parse(sessionStorage.getItem("user")):null;
+        const config = {
+            headers:{
+                Authorization:`Bearer ${user.token}`
+            }
+        }
+        return axios.put(URL+`${orderNumber}?status=PROCESSING`,"",config);
+    }
     cancelOrder(orderNumber){
         let user = JSON.parse(sessionStorage.getItem("user"))?JSON.parse(sessionStorage.getItem("user")):null;
         console.log(user.token)
