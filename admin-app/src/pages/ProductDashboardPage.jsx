@@ -8,7 +8,6 @@ import ProductService from '../services/ProductService';
 import ProductList from '../components/ProductList';
 import DetailsComponent from '../components/DetailsComponent';
 import SearchbarFragment from '../components/fragments/SearchbarFragment'
-import { Details } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     list: {

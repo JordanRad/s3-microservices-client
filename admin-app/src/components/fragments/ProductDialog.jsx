@@ -7,13 +7,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import ProductService from '../../services/ProductService';
 import { useParams } from 'react-router-dom';
-
 const createProduct = (product) => {
     return ProductService.createProduct(product);
 }
@@ -38,9 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MenuItemDialog(props) {
     const classes = useStyles();
-
     const { id } = useParams();
-
     const [open, setOpen] = useState(props.isOpen);
     const [product, setProduct] = useState({})
     const [updatedProduct, setUpdatedProduct] = useState({});
