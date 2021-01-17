@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const URL = 'http://localhost:8080/order-service/api/orders/';
+const URL = 'https://jordan-proxy-gateway.herokuapp.com/order-service/api/orders/';
 // const token = JSON.parse(sessionStorage.getItem("user")).token;
 class OrderService {
     

@@ -5,7 +5,7 @@ class AuthService {
             email: email,
             password: password
         }
-        return axios.post("http://localhost:8080/account-service/api/admin", user);
+        return axios.post("https://jordan-proxy-gateway.herokuapp.com/account-service/api/admin", user);
     }
     logout(){
         sessionStorage.clear();

@@ -3,7 +3,7 @@ import axios from 'axios';
 class CommunicationService {
     static async register(user) {
         let result = [];
-        await axios.post('http://localhost:8080/account-service/api/register', user)
+        await axios.post('https://jordan-proxy-gateway.herokuapp.com/account-service/api/register', user)
             .then((res) => {
                 result = res.data ? res.data : ["empty"]
             })
@@ -13,7 +13,7 @@ class CommunicationService {
 
     static async getProducts() {
         let result = [];
-        await axios.get('http://localhost:8080/product-service/api/products/getAll', {
+        await axios.get('https://jordan-proxy-gateway.herokuapp.com/product-service/api/products/getAll', {
                 headers: {
                     "crossDomain": true
                 }
@@ -32,7 +32,7 @@ class CommunicationService {
             email: email,
             password: password
         }
-        await axios.post('http://localhost:8080/account-service/api/login', user)
+        await axios.post('https://jordan-proxy-gateway.herokuapp.com/account-service/api/login', user)
             .then((res) => {
                 result = res.data ? res.data : ["empty"]
             })
@@ -43,7 +43,7 @@ class CommunicationService {
     static async updateUser(user) {
         let token = user.token;
         let result
-        await axios.put(`http://localhost:8080/account-service/api/users/${user.id}`, user, {
+        await axios.put(`https://jordan-proxy-gateway.herokuapp.com/account-service/api/users/${user.id}`, user, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -59,7 +59,7 @@ class CommunicationService {
         let token = user.token
         let result
         //console.log(order)
-        await axios.post("http://localhost:8080/order-service/api/orders/", order, {
+        await axios.post("https://jordan-proxy-gateway.herokuapp.com/order-service/api/orders/", order, {
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
@@ -72,7 +72,7 @@ class CommunicationService {
     
     static async getItemById(id){
         let result;
-        await axios.get(`http://localhost:8080/product-service/api/products/${id}`)
+        await axios.get(`https://jordan-proxy-gateway.herokuapp.com/product-service/api/products/${id}`)
             .then(res => result = res.data)
             .catch(e => console.log(e))
 
