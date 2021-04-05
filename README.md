@@ -1,5 +1,5 @@
-# E-commerce Front-end
-This repository consists of 2 separate front-end projects which are cliets for my microservice project. Let me give you general overview of these front-ends.
+# E-commerce Frontend
+This repository consists of 2 separate front-end projects which are cliets for my microservice project. Let me give you general overview of these frontends.
 
 ## Customer application
 React applicaton whose main functionality includes the process of making an order. Along with that, you have features such as:
