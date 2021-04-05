@@ -1,7 +1,21 @@
 # E-commerce Frontend
 This repository consists of 2 separate front-end projects which are cliets for my microservice project. Let me give you general overview of these frontends.
 
-## Customer application
+## Case
+Microservices E-commerce project consists of several microservices. Together they build an e-commerce distributed software system which includes:
+
+### Backend
+😃 User service
+
+📦 Order service
+
+🏬 Prodcut service
+
+🌐 Discovery server
+
+🔀 Gateway 
+
+## 🖥️ Customer application
 React applicaton whose main functionality includes the process of making an order. Along with that, you have features such as:
 
  :heavy_check_mark: Login & Registration
@@ -10,7 +24,7 @@ React applicaton whose main functionality includes the process of making an orde
  
  :heavy_check_mark: Local-storage based cart functionality
  
-## Admin panel
+## 🖥️ Admin panel
 React applicaton whose main functionality includes the process of applying **CRUD** operations to the backend models - user, products, orders. It includes fetures such as:
 
  :heavy_check_mark: Administrator Login (separate route)
